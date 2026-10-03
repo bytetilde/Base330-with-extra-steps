@@ -1,3 +1,5 @@
+#include "/lib/uniforms.glsl"
+
 #ifdef VSH
 
 out vec2 texcoord;
@@ -10,8 +12,6 @@ void main() {
 #endif
 
 #ifdef FSH
-
-uniform sampler2D colortex0;
 
 in vec2 texcoord;
 /* RENDERTARGETS: 0 */

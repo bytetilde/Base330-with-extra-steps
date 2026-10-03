@@ -1,3 +1,5 @@
+#include "/lib/uniforms.glsl"
+
 #ifdef VSH
 
 out vec2 texcoord;
@@ -12,9 +14,6 @@ void main() {
 #endif
 
 #ifdef FSH
-
-uniform sampler2D gtexture;
-uniform float alphaTestRef = 0.1;
 
 in vec2 texcoord;
 in vec4 glcolor;

@@ -1,3 +1,5 @@
+#include "/lib/uniforms.glsl"
+
 #ifdef VSH
 
 out vec4 glcolor;
@@ -10,14 +12,6 @@ void main() {
 #endif
 
 #ifdef FSH
-
-uniform int renderStage;
-uniform float viewHeight;
-uniform float viewWidth;
-uniform mat4 gbufferModelView;
-uniform mat4 gbufferProjectionInverse;
-uniform vec3 fogColor;
-uniform vec3 skyColor;
 
 in vec4 glcolor;
 /* RENDERTARGETS: 0 */
@@ -35,7 +29,6 @@ vec3 screenToView(vec3 screenPos) {
   vec4 tmp = gbufferProjectionInverse * ndcPos;
   return tmp.xyz / tmp.w;
 }
-
 
 void main() {
   if(renderStage == MC_RENDER_STAGE_STARS) {
