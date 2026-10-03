@@ -4,9 +4,11 @@
 
 out vec2 lmcoord;
 out vec4 glcolor;
+out vec3 normal;
 
 void main() {
   gl_Position = ftransform();
+  normal = gl_NormalMatrix * gl_Normal;
   lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
   glcolor = gl_Color;
 }
@@ -14,16 +16,20 @@ void main() {
 #endif
 
 #ifdef FSH
+#include "/lib/coordspace.glsl"
 
 in vec2 lmcoord;
 in vec4 glcolor;
-/* RENDERTARGETS: 0,2 */
+in vec3 normal;
+/* RENDERTARGETS: 0,1,2 */
 layout(location = 0) out vec4 color;
-layout(location = 1) out vec4 lightData;
+layout(location = 1) out vec4 normalData;
+layout(location = 2) out vec4 lightData;
 
 void main() {
   color = vec4(glcolor.rgb * glcolor.a, 1.0);
   if(color.a < alphaTestRef) discard;
+  normalData = vec4(octEncode(normalize(normal)), octEncode(normalize(normal)));
   lightData = vec4(lmcoord, 0.0, 1.0);
 }
 

@@ -5,6 +5,8 @@
 - Dimension stubs
 - Uniforms file with uniforms idk
 - Deferred (opaque) & forward (translucent) lighting
+- Coordinate space conversion library
+- Normals (octagonally encoded and stored twice, intended to be face normals in RG and perbuted PBR normals in BA)
 
 It's the structure I tend to converge on
 
