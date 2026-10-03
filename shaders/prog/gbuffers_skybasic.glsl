@@ -13,6 +13,7 @@ void main() {
 
 #ifdef FSH
 #include "/lib/color.glsl"
+#include "/lib/coordspace.glsl"
 
 in vec4 glcolor;
 /* RENDERTARGETS: 0,2 */
@@ -25,11 +26,6 @@ float fogify(float x, float w) {
 vec3 calcSkyColor(vec3 pos) {
   float upDot = dot(pos, gbufferModelView[1].xyz);
   return mix(skyColor, fogColor, fogify(max(upDot, 0.0), 0.25));
-}
-vec3 screenToView(vec3 screenPos) {
-  vec4 ndcPos = vec4(screenPos, 1.0) * 2.0 - 1.0;
-  vec4 tmp = gbufferProjectionInverse * ndcPos;
-  return tmp.xyz / tmp.w;
 }
 
 void main() {
