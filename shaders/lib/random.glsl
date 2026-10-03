@@ -26,24 +26,23 @@ uvec2 hash22(uvec2 v) {
   v ^= v >> 16u;
   return v;
 }
-// beware of poorly mixed y component
 uvec3 hash33(uvec3 v) {
-  v += uvec3(1013904223u, 2891336453u, 2246822519u);
+  v ^= uvec3(1013904223u, 2891336453u, 2246822519u);
   v *= uvec3(0x7feb352du, 0x846ca68bu, 0x6d24f0c7u);
-  v.x += v.y;
-  v.y += v.z;
-  v.z += v.x;
-  v ^= v >> 16u;
+  v.z ^= v.y;
+  v.y ^= v.x;
+  v.x ^= v.z;
+  v ^= v.zyx >> uvec3(13u, 14u, 20u);
   v *= uvec3(0x846ca68bu, 0x6d24f0c7u, 0x7feb352du);
-  v.x += v.y;
-  v.y += v.z;
-  v.z += v.x;
-  v ^= v >> 15u;
+  v.x ^= v.y;
+  v.y ^= v.z;
+  v.z ^= v.x;
+  v ^= v >> uvec3(17u, 15u, 12u);
   v *= uvec3(0x6d24f0c7u, 0x7feb352du, 0x846ca68bu);
-  v.x += v.y;
-  v.y += v.z;
-  v.z += v.x;
-  v ^= v >> 16u;
+  v.x ^= v.y;
+  v.y ^= v.z;
+  v.z ^= v.x;
+  v ^= v.xzy >> uvec3(13u, 12u, 16u);
   return v;
 }
 uvec4 hash44(uvec4 v) {
@@ -130,6 +129,23 @@ vec3 uintToSignedFloat(uvec3 v) {
 }
 vec4 uintToSignedFloat(uvec4 v) {
   return uintBitsToFloat((v >> 9u) | 0x3f800000u) * 2.0 - 3.0;
+}
+
+float uintToSignedFloatPrecise(uint v) {
+  float f = uintBitsToFloat((v >> 8) | 0x3f800000u) - 1.0;
+  return uintBitsToFloat(floatBitsToUint(f) ^ (v & 0x80000000u));
+}
+vec2 uintToSignedFloatPrecise(uvec2 v) {
+  vec2 f = uintBitsToFloat((v >> 8) | 0x3f800000u) - 1.0;
+  return uintBitsToFloat(floatBitsToUint(f) ^ (v & 0x80000000u));
+}
+vec3 uintToSignedFloatPrecise(uvec3 v) {
+  vec3 f = uintBitsToFloat((v >> 8) | 0x3f800000u) - 1.0;
+  return uintBitsToFloat(floatBitsToUint(f) ^ (v & 0x80000000u));
+}
+vec4 uintToSignedFloatPrecise(uvec4 v) {
+  vec4 f = uintBitsToFloat((v >> 8) | 0x3f800000u) - 1.0;
+  return uintBitsToFloat(floatBitsToUint(f) ^ (v & 0x80000000u));
 }
 
 float ign(vec2 p) {
