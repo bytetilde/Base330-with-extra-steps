@@ -17,12 +17,14 @@ void main() {
 
 in vec2 lmcoord;
 in vec4 glcolor;
-/* RENDERTARGETS: 0 */
+/* RENDERTARGETS: 0,2 */
 layout(location = 0) out vec4 color;
+layout(location = 1) out vec4 lightData;
 
 void main() {
-  color = glcolor * texture(lightmap, lmcoord);
+  color = vec4(glcolor.rgb * glcolor.a, 1.0);
   if(color.a < alphaTestRef) discard;
+  lightData = vec4(lmcoord, 0.0, 1.0);
 }
 
 #endif

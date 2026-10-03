@@ -4,6 +4,7 @@
 
 - Dimension stubs
 - Uniforms file with uniforms idk
+- Deferred (opaque) & forward (translucent) lighting
 
 It's the structure I tend to converge on
 

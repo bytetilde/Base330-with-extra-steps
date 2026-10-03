@@ -16,6 +16,7 @@ void main() {
 #endif
 
 #ifdef FSH
+#include "/lib/lighting.glsl"
 
 in vec2 lmcoord;
 in vec2 texcoord;
@@ -24,8 +25,9 @@ in vec4 glcolor;
 layout(location = 0) out vec4 color;
 
 void main() {
-  color = texture(gtexture, texcoord) * glcolor;
-  color *= texture(lightmap, lmcoord);
+  vec4 tex = texture(gtexture, texcoord);
+  color = vec4(tex.rgb * glcolor.rgb * glcolor.a, tex.a);
+  color.rgb = calcLighting(color.rgb, lmcoord, 1.0);
   if(color.a < alphaTestRef) discard;
 }
 
