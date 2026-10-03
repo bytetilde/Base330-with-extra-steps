@@ -2,6 +2,7 @@
 
 [Base-330](https://github.com/shaderLABS/Base-330) template pack with more stuff on top of it
 
+- Linear albedo
 - Dimension stubs
 - Uniforms file with uniforms idk
 - Deferred (opaque) & forward (translucent) lighting

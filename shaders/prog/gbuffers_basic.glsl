@@ -16,6 +16,7 @@ void main() {
 #endif
 
 #ifdef FSH
+#include "/lib/color.glsl"
 #include "/lib/coordspace.glsl"
 
 in vec2 lmcoord;
@@ -28,6 +29,7 @@ layout(location = 2) out vec4 lightData;
 
 void main() {
   color = vec4(glcolor.rgb * glcolor.a, 1.0);
+  color.rgb = srgbToLinear(color.rgb);
   if(color.a < alphaTestRef) discard;
   normalData = vec4(octEncode(normalize(normal)), octEncode(normalize(normal)));
   lightData = vec4(lmcoord, 0.0, 1.0);

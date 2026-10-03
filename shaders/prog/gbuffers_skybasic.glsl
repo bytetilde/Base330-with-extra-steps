@@ -12,6 +12,7 @@ void main() {
 #endif
 
 #ifdef FSH
+#include "/lib/color.glsl"
 
 in vec4 glcolor;
 /* RENDERTARGETS: 0,2 */
@@ -38,6 +39,7 @@ void main() {
     vec3 pos = screenToView(vec3(gl_FragCoord.xy / vec2(viewWidth, viewHeight), 1.0));
     color = vec4(calcSkyColor(normalize(pos)), 1.0);
   }
+  color.rgb = srgbToLinear(color.rgb);
   lightData = vec4(0.0, 0.0, 1.0, 1.0);
 }
 
