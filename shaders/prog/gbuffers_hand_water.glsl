@@ -27,9 +27,9 @@ layout(location = 0) out vec4 color;
 
 void main() {
   vec4 tex = texture(gtexture, texcoord);
-  color = vec4(tex.rgb * glcolor.rgb * glcolor.a, tex.a);
+  color = vec4(tex.rgb * glcolor.rgb, tex.a);
   color.rgb = srgbToLinear(color.rgb);
-  color.rgb = calcLighting(color.rgb, lmcoord, 1.0);
+  color.rgb = calcLighting(color.rgb, lmcoord, glcolor.a);
   if(color.a < alphaTestRef) discard;
 }
 

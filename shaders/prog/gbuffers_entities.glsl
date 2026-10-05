@@ -32,12 +32,12 @@ layout(location = 2) out vec4 lightData;
 
 void main() {
   vec4 tex = texture(gtexture, texcoord);
-  color = vec4(tex.rgb * glcolor.rgb * glcolor.a, tex.a);
+  color = vec4(tex.rgb * glcolor.rgb, tex.a);
   color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
   color.rgb = srgbToLinear(color.rgb);
   if(color.a < alphaTestRef) discard;
   normalData = vec4(octEncode(normalize(normal)), octEncode(normalize(normal)));
-  lightData = vec4(lmcoord, 0.0, 1.0);
+  lightData = vec4(lmcoord, 0.0, glcolor.a);
 }
 
 #endif
