@@ -148,8 +148,34 @@ vec4 uintToSignedFloatPrecise(uvec4 v) {
   return uintBitsToFloat(floatBitsToUint(f) ^ (v & 0x80000000u));
 }
 
+uint rngNext(inout uint rng) {
+  // pcg
+  rng = rng * 747796405u + 2891336453u;
+  uint w = ((rng >> ((rng >> 28u) + 4u)) ^ rng) * 277803737u;
+  return (w >> 22u) ^ w;
+}
+float rand1(inout uint rng) {
+  return uintToFloat(rngNext(rng));
+}
+vec2 rand2(inout uint rng) {
+  return vec2(rand1(rng), rand1(rng));
+}
+vec3 rand3(inout uint rng) {
+  return vec3(rand1(rng), rand1(rng), rand1(rng));
+}
+
 float ign(vec2 p) {
   return fract(52.9829189 * fract(0.06711056 * p.x + 0.00583715 * p.y));
+}
+
+vec3 uvToUnitVector(float u, float v) {
+  float phi = 2.0 * 3.14159265358979 * u;
+  float z = v * 2.0 - 1.0;
+  float r = sqrt(1.0 - z * z);
+  return vec3(r * cos(phi), r * sin(phi), z);
+}
+vec3 uvToUnitVector(uint u, uint v) {
+  return uvToUnitVector(uintToFloat(u), uintToFloat(v));
 }
 
 #endif
