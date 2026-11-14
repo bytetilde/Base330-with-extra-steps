@@ -1,5 +1,6 @@
 #ifndef LIB_RANDOM
 #define LIB_RANDOM
+#include "/lib/uniforms.glsl"
 
 uint hash11(uint v) {
   v += 1013904223u;
@@ -207,13 +208,31 @@ float blueNoiseTexless(ivec2 p, uint dimension) {
 }
 
 vec3 uvToUnitVector(float u, float v) {
-  float phi = 2.0 * 3.14159265358979 * u;
+  float phi = 2.0 * PI * u;
   float z = v * 2.0 - 1.0;
   float r = sqrt(1.0 - z * z);
   return vec3(r * cos(phi), r * sin(phi), z);
 }
 vec3 uvToUnitVector(uint u, uint v) {
   return uvToUnitVector(uintToFloat(u), uintToFloat(v));
+}
+
+vec2 uvToDisk(vec2 uv) {
+  vec2 p = uv * 2.0 - 1.0;
+  if(p.x == 0.0 && p.y == 0.0) return vec2(0.0);
+  float r, phi;
+  if(abs(p.x) > abs(p.y)) {
+    r = p.x;
+    phi = p.y / p.x;
+  } else {
+    r = p.y;
+    phi = 2.0 - p.x / p.y;
+  }
+  phi *= 0.25 * PI;
+  return r * vec2(cos(phi), sin(phi));
+}
+float cosineHemispherePdf(float cosTheta) {
+  return max(cosTheta, 0.0) * INVPI;
 }
 
 #endif

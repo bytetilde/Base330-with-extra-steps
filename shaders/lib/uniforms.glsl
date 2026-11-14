@@ -41,4 +41,7 @@ uniform mat4 shadowProjection;
 uniform vec3 fogColor;
 uniform vec3 skyColor;
 
+const float PI = 3.141592653589793;
+const float INVPI = 0.3183098861837907;
+
 #endif
