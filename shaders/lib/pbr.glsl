@@ -3,6 +3,7 @@
 
 #define PBR_FORMAT_NONE 0
 #define PBR_FORMAT_LABPBR 1
+#define PBR_FORMAT_OLDPBR 2
 
 #ifndef PBR_FORMAT
 #define PBR_FORMAT PBR_FORMAT_LABPBR
@@ -56,6 +57,16 @@ PbrMaterial decodePbr(vec4 normalSample, vec4 specularSample, vec3 albedo) {
 }
 PbrMaterial readPbr(sampler2D normalTexture, sampler2D specularTexture, vec2 texcoord, vec3 albedo) {
   return readLabPbr(normalTexture, specularTexture, texcoord, albedo);
+}
+
+#elif PBR_FORMAT == PBR_FORMAT_OLDPBR
+#include "/lib/pbr/oldpbr.glsl"
+
+PbrMaterial decodePbr(vec4 normalSample, vec4 specularSample, vec3 albedo) {
+  return decodeOldPbr(normalSample, specularSample, albedo);
+}
+PbrMaterial readPbr(sampler2D normalTexture, sampler2D specularTexture, vec2 texcoord, vec3 albedo) {
+  return readOldPbr(normalTexture, specularTexture, texcoord, albedo);
 }
 
 #else
