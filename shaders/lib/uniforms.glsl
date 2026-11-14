@@ -12,7 +12,7 @@ uniform sampler2D lightmap;
 uniform sampler2D mclightmap;
 uniform sampler2D gtexture;
 
-uniform sampler2D blueNoiseTex;
+uniform sampler3D blueNoiseTex;
 
 uniform float alphaTestRef = 0.1;
 uniform vec4 entityColor;
