@@ -167,6 +167,44 @@ vec3 rand3(inout uint rng) {
 float ign(vec2 p) {
   return fract(52.9829189 * fract(0.06711056 * p.x + 0.00583715 * p.y));
 }
+float ign(vec2 p, int frame) {
+  return ign(p + vec2(5.588238 * float(frame & 63)));
+}
+
+// NVIDIA STBN
+float blueNoiseST(ivec2 p, int frame, uint dimension) {
+  ivec2 offset = int(dimension & 127u) * ivec2(53, 37);
+  float v = texelFetch(blueNoiseTex, ivec3((p + offset) & 127, frame & 63), 0).r;
+  return v * (255.0 / 256.0) + (0.5 / 256.0);
+}
+float blueNoise(ivec2 p, uint dimension) {
+  return blueNoiseST(p, 0, dimension);
+}
+
+// it kinda sucks
+float blueNoiseSTTexless(ivec2 p, int frame, uint dimension) {
+  uint pixel = uint(p.x) + (uint(p.y) << 16u);
+  uint t = uint(frame);
+  uint key = t * 0x9e3779b9u + dimension * 0x85ebca6bu;
+  uint prevKey = key - 0x9e3779b9u;
+  uint stride = 1u << ((t & 1u) << 4u);
+  uint prevStride = 1u << (((t ^ 1u) & 1u) << 4u);
+  float a = uintToFloat(hash11(pixel + key));
+  float b = uintToFloat(hash11(pixel + stride + key));
+  float c = uintToFloat(hash11(pixel + prevKey));
+  float d = uintToFloat(hash11(pixel + prevStride + prevKey));
+  float v = (a - b) - (c - d);
+  float x = 2.0 - abs(v);
+  float y = max(x - 1.0, 0.0);
+  x *= x;
+  y *= y;
+  float tail = (x * x - 4.0 * y * y) * (1.0 / 24.0);
+  float u = v < 0.0 ? tail : 1.0 - tail;
+  return clamp(u, 5.96046448e-8, 0.99999994);
+}
+float blueNoiseTexless(ivec2 p, uint dimension) {
+  return blueNoiseSTTexless(p, 0, dimension);
+}
 
 vec3 uvToUnitVector(float u, float v) {
   float phi = 2.0 * 3.14159265358979 * u;
