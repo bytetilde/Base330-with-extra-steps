@@ -16,6 +16,8 @@ uniform sampler2D colortex7;
 uniform sampler2D lightmap;
 uniform sampler2D mclightmap;
 uniform sampler2D gtexture;
+uniform sampler2D normals;
+uniform sampler2D specular;
 
 uniform sampler3D blueNoiseTex;
 
