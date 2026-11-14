@@ -28,7 +28,7 @@ layout(location = 1) out vec4 normalData;
 layout(location = 2) out vec4 lightData;
 
 void main() {
-  color = vec4(glcolor.rgb, 1.0);
+  color = glcolor;
   color.rgb = srgbToLinear(color.rgb);
   if(color.a < alphaTestRef) discard;
   normalData = vec4(octEncode(normalize(normal)), octEncode(normalize(normal)));
