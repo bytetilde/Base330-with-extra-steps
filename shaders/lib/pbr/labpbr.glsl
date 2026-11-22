@@ -1,8 +1,9 @@
 #ifndef LIB_PBR_LABPBR
 #define LIB_PBR_LABPBR
 
-// PbrMaterial exists
-// source: i know it does
+// PbrMaterial may not exist
+// source: ignore/check.sh
+#include "/lib/pbr/shared.glsl"
 
 vec3 pbrDecodeNormals(vec4 n) {
   vec2 xy = n.rg * 2.0 - 1.0;

@@ -1,8 +1,9 @@
 #ifndef LIB_PBR_OLDPBR
 #define LIB_PBR_OLDPBR
 
-// PbrMaterial exists
+// PbrMaterial may not exist
 // source: labpbr.glsl
+#include "/lib/pbr/shared.glsl"
 
 // i actually DONT know how oldpbr works so this is a guess
 // if it doesnt, my fault bro

@@ -9,43 +9,7 @@
 #define PBR_FORMAT PBR_FORMAT_LABPBR
 #endif
 
-struct PbrNormalData {
-  vec3 normal;
-  float ao;
-  float height;
-};
-struct PbrSpecularData {
-  float roughness;
-  vec3 f0;
-  float metalness;
-  vec3 reflectionTint;
-  vec3 conductorN;
-  vec3 conductorK;
-  float porosity;
-  float subsurface;
-  float emission;
-};
-struct PbrMetalData {
-  vec3 f0;
-  float metalness;
-  vec3 reflectionTint;
-  vec3 conductorN;
-  vec3 conductorK;
-};
-struct PbrMaterial {
-  vec3 normal;
-  float ao;
-  float height;
-  float roughness;
-  vec3 f0;
-  float metalness;
-  vec3 reflectionTint;
-  vec3 conductorN;
-  vec3 conductorK;
-  float porosity;
-  float subsurface;
-  float emission;
-};
+#include "/lib/pbr/shared.glsl"
 
 #if PBR_FORMAT == PBR_FORMAT_NONE
 vec3 pbrDecodeNormals(vec4 n) {
