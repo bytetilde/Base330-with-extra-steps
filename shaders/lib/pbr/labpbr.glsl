@@ -9,7 +9,8 @@
 vec3 pbrDecodeNormals(vec4 n) {
   vec2 xy = n.rg * 2.0 - 1.0;
   xy.y = -xy.y;
-  return normalize(vec3(xy, sqrt(max(1.0 - dot(xy, xy), 0.0))) * PBR_NORMALS_STRENGTH);
+  float z = sqrt(max(1.0 - dot(xy, xy), 0.0));
+  return normalize(vec3(xy * PBR_NORMALS_STRENGTH, max(z, 1e-6)));
 }
 float pbrDecodeAo(vec4 n) {
   return n.b;
