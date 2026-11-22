@@ -18,9 +18,9 @@ void main() {
 #endif
 
 #ifdef FSH
-#include "/lib/color.glsl"
-#include "/lib/coordspace.glsl"
+#include "/lib/color/color.glsl"
 #include "/lib/pbr.glsl"
+#include "/lib/util/coordspace.glsl"
 
 in vec2 lmcoord;
 in vec2 texcoord;

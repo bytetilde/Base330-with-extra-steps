@@ -1,6 +1,6 @@
 #ifndef LIB_LIGHTING
 #define LIB_LIGHTING
-#include "/lib/color.glsl"
+#include "/lib/color/color.glsl"
 #include "/lib/uniforms.glsl"
 
 vec3 sampleLightmap(vec2 lmcoord) {

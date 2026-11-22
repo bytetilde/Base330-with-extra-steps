@@ -12,7 +12,7 @@ void main() {
 #endif
 
 #ifdef FSH
-#include "/lib/color.glsl"
+#include "/lib/color/color.glsl"
 
 in vec2 texcoord;
 /* RENDERTARGETS: 0 */

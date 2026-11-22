@@ -16,7 +16,7 @@ void main() {
 #endif
 
 #ifdef FSH
-#include "/lib/color.glsl"
+#include "/lib/color/olor.glsl"
 #include "/lib/lighting.glsl"
 
 in vec2 lmcoord;
