@@ -6,10 +6,12 @@ out vec2 lmcoord;
 out vec2 texcoord;
 out vec4 glcolor;
 out vec3 normal;
+out vec3 viewPos;
 
 void main() {
   gl_Position = ftransform();
   normal = gl_NormalMatrix * gl_Normal;
+  viewPos = (gl_ModelViewMatrix * gl_Vertex).xyz;
   texcoord = (gl_TextureMatrix[0] * gl_MultiTexCoord0).xy;
   lmcoord = (gl_TextureMatrix[1] * gl_MultiTexCoord1).xy;
   glcolor = gl_Color;
@@ -26,6 +28,7 @@ in vec2 lmcoord;
 in vec2 texcoord;
 in vec4 glcolor;
 in vec3 normal;
+in vec3 viewPos;
 /* RENDERTARGETS: 0,1,2 */
 layout(location = 0) out vec4 color;
 layout(location = 1) out vec4 normalData;
@@ -37,7 +40,9 @@ void main() {
   color.rgb = mix(color.rgb, entityColor.rgb, entityColor.a);
   color.rgb = srgbToLinear(color.rgb);
   if(color.a < alphaTestRef) discard;
-  normalData = vec4(octEncode(normalize(normal)), octEncode(pbrDecodeNormals(texture(normals, texcoord))));
+  normalData = vec4(octEncode(normalize(normal)),
+                    octEncode(pbrPerturbNormal(normal, pbrDecodeNormals(texture(normals, texcoord)),
+                                               viewPos, texcoord)));
   lightData = vec4(lmcoord, 0.0, glcolor.a);
 }
 

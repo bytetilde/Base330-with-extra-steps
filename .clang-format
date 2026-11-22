@@ -25,7 +25,7 @@ MaxEmptyLinesToKeep: 1
 ReflowComments: false
 SortIncludes: true
 IncludeBlocks: Preserve
-ColumnLimit: 99999
+ColumnLimit: 100
 NumericLiteralCase:
   HexDigit: Lower
   Prefix: Lower

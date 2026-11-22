@@ -46,13 +46,15 @@ float linearizeDepth(float depth) {
 
 vec2 octEncode(vec3 n) {
   n /= abs(n.x) + abs(n.y) + abs(n.z);
-  if(n.z < 0.0) n.xy = (vec2(1.0) - abs(n.yx)) * vec2(n.x >= 0.0 ? 1.0 : -1.0, n.y >= 0.0 ? 1.0 : -1.0);
+  if(n.z < 0.0)
+    n.xy = (vec2(1.0) - abs(n.yx)) * vec2(n.x >= 0.0 ? 1.0 : -1.0, n.y >= 0.0 ? 1.0 : -1.0);
   return n.xy * 0.5 + 0.5;
 }
 vec3 octDecode(vec2 e) {
   vec2 p = e * 2.0 - 1.0;
   vec3 n = vec3(p.x, p.y, 1.0 - abs(p.x) - abs(p.y));
-  if(n.z < 0.0) n.xy = (vec2(1.0) - abs(n.yx)) * vec2(n.x >= 0.0 ? 1.0 : -1.0, n.y >= 0.0 ? 1.0 : -1.0);
+  if(n.z < 0.0)
+    n.xy = (vec2(1.0) - abs(n.yx)) * vec2(n.x >= 0.0 ? 1.0 : -1.0, n.y >= 0.0 ? 1.0 : -1.0);
   return normalize(n);
 }
 

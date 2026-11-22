@@ -65,7 +65,9 @@ PbrNormalData pbrDecodeN(vec4 n) {
 }
 PbrSpecularData pbrDecodeS(vec4 s, vec3 albedo) {
   PbrMetalData metal = pbrDecodeMetalOptics(s, albedo);
-  return PbrSpecularData(pbrDecodeRoughness(s), metal.f0, metal.metalness, metal.reflectionTint, metal.conductorN, metal.conductorK, pbrDecodePorosity(s), pbrDecodeSSS(s), pbrDecodeEmission(s));
+  return PbrSpecularData(pbrDecodeRoughness(s), metal.f0, metal.metalness, metal.reflectionTint,
+                         metal.conductorN, metal.conductorK, pbrDecodePorosity(s), pbrDecodeSSS(s),
+                         pbrDecodeEmission(s));
 }
 PbrNormalData pbrDecodeN(sampler2D tex, vec2 uv) {
 #if PBR_FORMAT == PBR_FORMAT_NONE
@@ -85,7 +87,8 @@ PbrSpecularData pbrDecodeS(sampler2D tex, vec2 uv, vec3 albedo) {
 PbrMaterial decodePbr(vec4 normalSample, vec4 specularSample, vec3 albedo) {
   PbrNormalData n = pbrDecodeN(normalSample);
   PbrSpecularData s = pbrDecodeS(specularSample, albedo);
-  return PbrMaterial(n.normal, n.ao, n.height, s.roughness, s.f0, s.metalness, s.reflectionTint, s.conductorN, s.conductorK, s.porosity, s.subsurface, s.emission);
+  return PbrMaterial(n.normal, n.ao, n.height, s.roughness, s.f0, s.metalness, s.reflectionTint,
+                     s.conductorN, s.conductorK, s.porosity, s.subsurface, s.emission);
 }
 PbrMaterial readPbr(sampler2D normalTexture, sampler2D specularTexture, vec2 uv, vec3 albedo) {
 #if PBR_FORMAT == PBR_FORMAT_NONE
@@ -93,6 +96,17 @@ PbrMaterial readPbr(sampler2D normalTexture, sampler2D specularTexture, vec2 uv,
 #else
   return decodePbr(texture(normalTexture, uv), texture(specularTexture, uv), albedo);
 #endif
+}
+
+vec3 pbrPerturbNormal(vec3 baseNormal, vec3 tangentNormal, vec3 viewPos, vec2 uv) {
+  vec3 dpdx = dFdx(viewPos);
+  vec3 dpdy = dFdy(viewPos);
+  vec2 duvdx = dFdx(uv);
+  vec2 duvdy = dFdy(uv);
+  vec3 tangent = dpdx * duvdy.y - dpdy * duvdx.y;
+  vec3 bitangent = -dpdx * duvdy.x + dpdy * duvdx.x;
+  float scale = inversesqrt(max(dot(tangent, tangent), dot(bitangent, bitangent)));
+  return normalize(mat3(tangent * scale, bitangent * scale, normalize(baseNormal)) * tangentNormal);
 }
 
 #endif
