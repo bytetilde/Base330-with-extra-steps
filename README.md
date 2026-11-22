@@ -9,7 +9,7 @@
 - PBR support (labPBR and hopefully correct oldPBR)
   Only normals are written for now, in colortex1, octahedral encoding:
   - colortex1.rg: face normals
-  - colortex2.ba: also face normals but with the PBR normal map applied (perturbed?)
+  - colortex1.ba: also face normals but with the PBR normal map applied (perturbed?)
   Decoding for the other fields is implemented
 - Extra code for stuff like coordinate space conversion
 
