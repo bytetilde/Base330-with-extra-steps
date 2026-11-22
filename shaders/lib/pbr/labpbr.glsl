@@ -19,7 +19,7 @@ float pbrDecodeHeight(vec4 n) {
   return n.a;
 }
 float pbrDecodeRoughness(vec4 s) {
-  float r = 1.0 - s.r;
+  float r = clamp(1.0 - s.r + PBR_ROUGHNESS_BIAS, 0.0, 1.0);
   return r * r;
 }
 int labPbrMetalId(vec4 s) {

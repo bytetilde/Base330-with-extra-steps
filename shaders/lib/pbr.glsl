@@ -54,13 +54,14 @@ vec3 pbrDecodeConductorK(vec4 s) {
 }
 
 PbrNormalData pbrDecodeN(vec4 n) {
-  return PbrNormalData(pbrDecodeNormals(n), pbrDecodeAo(n), pbrDecodeHeight(n));
+  return PbrNormalData(pbrDecodeNormals(n), mix(1.0, pbrDecodeAo(n), PBR_AO_STRENGTH),
+                       pbrDecodeHeight(n));
 }
 PbrSpecularData pbrDecodeS(vec4 s, vec3 albedo) {
   PbrMetalData metal = pbrDecodeMetalOptics(s, albedo);
   return PbrSpecularData(pbrDecodeRoughness(s), metal.f0, metal.metalness, metal.reflectionTint,
                          metal.conductorN, metal.conductorK, pbrDecodePorosity(s), pbrDecodeSSS(s),
-                         pbrDecodeEmission(s));
+                         pbrDecodeEmission(s) * PBR_EMISSION_STRENGTH);
 }
 PbrNormalData pbrDecodeN(sampler2D tex, vec2 uv) {
 #if PBR_FORMAT == PBR_FORMAT_NONE

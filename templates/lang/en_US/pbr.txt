@@ -7,3 +7,13 @@ PBR_FORMAT PBR Format
     2 oldPBR
 
 PBR_NORMALS_STRENGTH Normals Strength
+PBR_AO_STRENGTH AO Strength
+PBR_ROUGHNESS_BIAS Roughness Bias
+PBR_EMISSION_STRENGTH Emission Strength
+
+PBR_OLDPBR_NORMAL_Y oldPBR Normal Direction
+  !empty
+    -1 DirectX Y-
+    1 OpenGL Y+
+PBR_OLDPBR_BLUE_EMISSION oldPBR Blue Emission
+PBR_OLDPBR_BINARY_METALNESS oldPBR Binary Metalness
