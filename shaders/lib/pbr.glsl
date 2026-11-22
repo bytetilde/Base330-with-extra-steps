@@ -98,6 +98,7 @@ PbrMaterial readPbr(sampler2D normalTexture, sampler2D specularTexture, vec2 uv,
 #endif
 }
 
+// expects OpenGL Y+ normals
 vec3 pbrPerturbNormal(vec3 baseNormal, vec3 tangentNormal, vec3 viewPos, vec2 uv) {
   vec3 dpdx = dFdx(viewPos);
   vec3 dpdy = dFdy(viewPos);
