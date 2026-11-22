@@ -1,0 +1,7 @@
+screen.PBR=PBR
+option.PBR_FORMAT=PBR Format
+value.PBR_FORMAT.0=§fNone§r
+value.PBR_FORMAT.1=§flabPBR§r
+value.PBR_FORMAT.2=§foldPBR§r
+option.PBR_FORMAT.comment=
+option.PBR_NORMALS_STRENGTH=Normals Strength

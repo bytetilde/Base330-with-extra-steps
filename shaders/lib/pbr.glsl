@@ -1,13 +1,6 @@
 #ifndef LIB_PBR
 #define LIB_PBR
-
-#define PBR_FORMAT_NONE 0
-#define PBR_FORMAT_LABPBR 1
-#define PBR_FORMAT_OLDPBR 2
-
-#ifndef PBR_FORMAT
-#define PBR_FORMAT PBR_FORMAT_LABPBR
-#endif
+#include "/lib/settings/pbr.glsl"
 
 #include "/lib/pbr/shared.glsl"
 

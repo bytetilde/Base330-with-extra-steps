@@ -1,0 +1,9 @@
+screen.PBR PBR
+
+PBR_FORMAT PBR Format
+  !empty
+    0 None
+    1 labPBR
+    2 oldPBR
+
+PBR_NORMALS_STRENGTH Normals Strength

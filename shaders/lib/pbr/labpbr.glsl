@@ -1,5 +1,6 @@
 #ifndef LIB_PBR_LABPBR
 #define LIB_PBR_LABPBR
+#include "/lib/settings/pbr.glsl"
 
 // PbrMaterial may not exist
 // source: ignore/check.sh
@@ -8,7 +9,7 @@
 vec3 pbrDecodeNormals(vec4 n) {
   vec2 xy = n.rg * 2.0 - 1.0;
   xy.y = -xy.y;
-  return normalize(vec3(xy, sqrt(max(1.0 - dot(xy, xy), 0.0))));
+  return normalize(vec3(xy, sqrt(max(1.0 - dot(xy, xy), 0.0))) * PBR_NORMALS_STRENGTH);
 }
 float pbrDecodeAo(vec4 n) {
   return n.b;
